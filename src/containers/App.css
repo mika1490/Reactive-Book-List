@@ -7,19 +7,24 @@
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
+/* .book-filter {
+  background-color: lightslategray;
+  height: 20px;
   padding: 20px;
   color: white;
+} */
+
+.app-title {
+  font-size: 2.5em;
+  color: slategrey;
 }
 
-.App-title {
+.book {
+  font-family: 'Trebuchet MS';
   font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
+  height: 80px;
+  padding: 10px;
+  color: lightslategray;
 }
 
 @keyframes App-logo-spin {

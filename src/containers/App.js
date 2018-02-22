@@ -1,21 +1,71 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import './App.css';
-import NameTag from '../components/NameTag';
+import { getBooksFromFakeXHR } from '../lib/books.db';
+import { addBookToFakeXHR } from '../lib/books.db';
+// import { getBookByIdFromFakeXHR } from '../lib/books.db';
+import BookListAppTitle from '../components/BookListAppTitle';
+import BookList from './BookList/index';
+import NewBookForm from './NewBookForm/index';
+import BookFilterInput from '../components/BookFilterInput'
+
 class App extends Component {
+  constructor() {
+    super()
+    this.state = { bookList: [], searchFor: '' }
+    this.setSearchFor = this.setSearchFor.bind(this);
+    this.resetSearch = this.resetSearch.bind(this);
+  }
+
+  setSearchFor(element) {
+    const searchFor = element.target.value;
+    this.setState({ searchFor })
+  }
+  
+  resetSearch() {
+    this.setState({
+      searchFor: ''
+    })
+  }
+
+  addBook(book) {
+    let newBook = {
+      title: book.title,
+      author: book.author
+    }
+
+
+    addBookToFakeXHR(newBook)
+      .then(bookList => {
+        this.setState({
+          bookList
+        })
+      })
+  }
+
+  componentDidMount() {
+    getBooksFromFakeXHR()
+      .then(bookList => {
+        this.setState({
+          bookList
+        })
+      })
+  }
   render() {
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <NameTag name = "Mika"/>
+
+        <BookListAppTitle title='Mika&#39;s Book List' />
+        
+        <BookFilterInput searchFor={ this.setSearchFor } resetSearch={this.resetSearch} />
+
+        <BookList books={ this.state.bookList } searchFor={this.state.searchFor} />
+
+        <NewBookForm addBook={ this.addBook.bind(this) } />
+
+
       </div>
-    );
+    )
   }
 }
 
