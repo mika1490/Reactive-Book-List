@@ -1,6 +1,5 @@
 import React from 'react';
 import BookListItem from '../../components/BookListItem';
-import BookFilterInput from '../../components/BookFilterInput';
 
 const BookList = ({ books, searchFor }) => {
     
